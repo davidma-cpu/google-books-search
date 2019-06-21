@@ -4,6 +4,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Search from "./pages/Search";
+import Saved from "./pages/Saved";
 import Wrapper from "./components/Wrapper";
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
           <Navbar />
           <Wrapper>
             <Route exact path="/" component={Search} />
+            <Route exact path="/saved" component={Saved} />
           </Wrapper>
           <Footer />
         </div>
