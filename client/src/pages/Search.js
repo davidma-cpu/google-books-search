@@ -23,9 +23,9 @@ class Search extends Component {
 
     render() {
         return (
-            <Container fluid>
+            <Container>
                 <Row>
-                    <Col size="md-6">
+                    <Col size="md-12">
                         <Jumbotron>
                             <h1>(React) Google Books Search</h1>
                             <h2>Search for and Save Books of Interest</h2>
