@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Col, Row, Container } from "../components/Grid";
 import Jumbotron from "../components/Jumbotron";
 import SearchForm from "../components/SearchForm";
+import { List, ListItem } from "../components/List";
+import API from "../utils/API";
+import SaveBtn from "../components/SaveBtn";
+import ViewBtn from "../components/ViewBtn";
 
 
 class Search extends Component {
@@ -12,13 +16,17 @@ class Search extends Component {
     };
 
     handleInputChange = event => {
-        this.setState({ search: event.target.value});
+        this.setState({ search: event.target.value });
     };
 
     handleFormSubmit = event => {
         event.preventDefault();
-        console.log(event.target);
-        
+        //alert(this.state.search);
+        API.getBookFromGoogle(this.state.search)
+            .then(res => this.setState({
+                results: res.data.items
+            }))
+            .catch(err => console.log(err));
     }
 
     render() {
@@ -36,9 +44,32 @@ class Search extends Component {
                     <Col size="md-6">
                         <SearchForm
                             search={this.state.search}
-                            handleFormSubmit={this.handleFormSubmit} 
+                            handleFormSubmit={this.handleFormSubmit}
                             handleInputChange={this.handleInputChange}
                         />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col size="md-12">
+                        {this.state.results.length ? (
+                            <List>
+                                {this.state.results.map(book => (
+                                    <ListItem key={book.id}>
+                                        <h2><strong>{book.volumeInfo.title}</strong></h2>
+                                        <Container>
+                                            <h5>{"Authors: "}</h5>
+                                            <h2>{book.volumeInfo.authors.join(', ')}</h2>
+                                        </Container>
+
+                                        <p><img alt="bookPic" src={book.volumeInfo.imageLinks.smallThumbnail}/>{book.volumeInfo.description ? (book.volumeInfo.description) : ("No Description Available") }</p>
+                                        <SaveBtn />
+                                        <ViewBtn />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        ) : (
+                                <h3>Search for a book</h3>
+                            )}
                     </Col>
                 </Row>
             </Container>
