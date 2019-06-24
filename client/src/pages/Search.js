@@ -23,10 +23,23 @@ class Search extends Component {
         event.preventDefault();
         //alert(this.state.search);
         API.getBookFromGoogle(this.state.search)
-            .then(res => this.setState({
+            .then(res => {
+                this.setState({
                 results: res.data.items
-            }))
+                });
+                //console.log(this.state.results);
+        })
             .catch(err => console.log(err));
+    }
+    // function to handle clicking on a specific result to redirect to google page
+    handleViewClick = link => {
+        
+       window.location = link;
+        
+    }
+    // function to handle saving a book 
+    handleSaveClick = item => {
+        console.log(item);
     }
 
     render() {
@@ -62,8 +75,8 @@ class Search extends Component {
                                         </Container>
 
                                         <p><img alt="bookPic" src={book.volumeInfo.imageLinks.smallThumbnail}/>{book.volumeInfo.description ? (book.volumeInfo.description) : ("No Description Available") }</p>
-                                        <SaveBtn />
-                                        <ViewBtn />
+                                        <SaveBtn onClick={() => this.handleSaveClick(book.volumeInfo)}/>
+                                        <ViewBtn onClick={() => this.handleViewClick(book.volumeInfo.previewLink)}/>
                                     </ListItem>
                                 ))}
                             </List>
