@@ -11,8 +11,7 @@ import ViewBtn from "../components/ViewBtn";
 class Search extends Component {
     state = {
         search: "",
-        results: [],
-        error: ""
+        results: []
     };
 
     handleInputChange = event => {
@@ -39,7 +38,28 @@ class Search extends Component {
     }
     // function to handle saving a book 
     handleSaveClick = item => {
-        console.log(item);
+        if (!item.imageLinks) {
+            API.saveBook({
+                title: item.title,
+                author: item.authors,
+                synopsis: item.description,
+                image: "blank",
+                link: item.previewLink
+            })
+                .then(res => console.log("SAVED ITEM... "))
+                .catch(err => console.log(err));
+        }
+        else {
+            API.saveBook({
+                title: item.title,
+                author: item.authors,
+                synopsis: item.description,
+                image: item.imageLinks.smallThumbnail,
+                link: item.previewLink
+            })
+                .then(res => console.log("SAVED ITEM... "))
+                .catch(err => console.log(err));
+        }     
     }
 
     render() {
@@ -73,8 +93,10 @@ class Search extends Component {
                                             <h5>{"Authors: "}</h5>
                                             <h2>{book.volumeInfo.authors.join(', ')}</h2>
                                         </Container>
-
-                                        <p><img alt="bookPic" src={book.volumeInfo.imageLinks.smallThumbnail}/>{book.volumeInfo.description ? (book.volumeInfo.description) : ("No Description Available") }</p>
+                                        <p>
+                                            <img alt="bookCover" src={book.volumeInfo.imageLinks ? (book.volumeInfo.imageLinks.smallThumbnail):("")}/>
+                                            {book.volumeInfo.description ? (book.volumeInfo.description) : ("No Description Available") }
+                                        </p>
                                         <SaveBtn onClick={() => this.handleSaveClick(book.volumeInfo)}/>
                                         <ViewBtn onClick={() => this.handleViewClick(book.volumeInfo.previewLink)}/>
                                     </ListItem>

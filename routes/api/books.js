@@ -14,3 +14,14 @@ const booksController = require("../../controllers/booksController");
 //   .delete(booksController.remove);
 
 // module.exports = router;
+
+
+// Matches with "/api/books"
+router.route("/")
+    .post(booksController.saveBook)
+    .get(booksController.findAll);
+
+ router.route("/:id")
+     .delete(booksController.deleteBook);
+
+module.exports = router;
