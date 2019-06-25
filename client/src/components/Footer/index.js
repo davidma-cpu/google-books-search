@@ -4,7 +4,7 @@ import "./style.css";
 function Footer() {
   return (
     <footer className="footer">
-      <span>David Ma 2019</span>
+      <span>david-fetchopia 2019</span>
     </footer>
   );
 }
