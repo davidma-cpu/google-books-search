@@ -19,9 +19,10 @@ app.use(routes);
 // var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist2";
 // mongoose.connect(MONGODB_URI, {useNewUrlParser: true});
 
-const CONNECTION_URL = 'mongodb+srv://davidma:davidma123@cluster0.qdcbx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+// const CONNECTION_URL = 'mongodb+srv://davidma:davidma123@cluster0.qdcbx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 
-mongoose.connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: true})
+const uri = process.env.MONGODB_URI;
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(app.listen(PORT, () => {
     console.log(`🌎 ==> API server now on port ${PORT}!`);
   }))
