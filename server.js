@@ -1,5 +1,5 @@
 const express = require("express");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const app = express();
 const routes = require("./routes");
 const mongoose = require("mongoose");
@@ -27,7 +27,7 @@ mongoose.connect(CONNECTION_URL, {useNewUrlParser: true, useUnifiedTopology: tru
   }))
   .catch((error) => {console.log(error.message)})
 
-  mongoose.set('useFindAndModify', false);
+mongoose.set('useFindAndModify', false);
 
 // app.listen(PORT, () => {
 //   console.log(`🌎 ==> API server now on port ${PORT}!`);
